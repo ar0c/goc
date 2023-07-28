@@ -1,4 +1,7 @@
-on: 
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
   release:
     types: [published,edited]
 name: Build Release
@@ -7,11 +10,11 @@ jobs:
     name: release linux/amd64
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
     - name: Install Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.16.x
+        go-version: 1.19.x
     - name: compile and release
       run: |
         ./hack/release.sh
@@ -24,11 +27,11 @@ jobs:
     name: release linux/386
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
     - name: Install Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.16.x
+        go-version: 1.19.x
     - name: compile and release
       run: |
         ./hack/release.sh
@@ -41,11 +44,11 @@ jobs:
     name: release darwin/amd64
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
     - name: Install Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.16.x
+        go-version: 1.19.x
     - name: compile and release
       run: |
         ./hack/release.sh
@@ -62,7 +65,7 @@ jobs:
 #    - name: Install Go
 #      uses: actions/setup-go@v2
 #      with:
-#        go-version: 1.16.x
+#        go-version: 1.19.x
 #    - name: compile and release
 #      run: |
 #        ./hack/release.sh
