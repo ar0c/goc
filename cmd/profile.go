@@ -32,6 +32,7 @@ var (
 	profileIds         []string
 	profileSkipPattern []string
 	profileExtra       string
+	profileNeedPattern []string
 )
 
 func init() {
@@ -45,6 +46,7 @@ func init() {
 	add2Flags := func(f *pflag.FlagSet) {
 		f.StringVarP(&profileOutput, "output", "o", "", "download cover profile")
 		f.StringSliceVar(&profileSkipPattern, "skip", nil, "skip specific packages in the profile")
+		f.StringSliceVarP(&profileNeedPattern, "need", "n", nil, "find specific packages in the profile")
 	}
 
 	add1Flags(getProfileCmd.Flags())
@@ -63,7 +65,7 @@ var getProfileCmd = &cobra.Command{
 }
 
 func getProfile(cmd *cobra.Command, args []string) {
-	client.GetProfile(profileHost, profileIds, profileSkipPattern, profileExtra, profileOutput)
+	client.GetProfile(profileHost, profileIds, profileSkipPattern, profileExtra, profileOutput, profileNeedPattern)
 }
 
 var clearProfileCmd = &cobra.Command{

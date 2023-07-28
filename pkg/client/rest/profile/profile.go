@@ -39,6 +39,7 @@ type profileClient struct {
 	c            *resty.Client
 	skipPatterns []string
 	extraPattern string
+	needPattern  []string
 }
 
 func NewProfileClient(c *resty.Client) *profileClient {
@@ -61,6 +62,12 @@ func WithExtraPattern(pattern string) profileOption {
 	}
 }
 
+func WithNeed(need []string) profileOption {
+	return func(pc *profileClient) {
+		pc.needPattern = need
+	}
+}
+
 func (p *profileClient) Get(ids []string, opts ...profileOption) (string, error) {
 	for _, opt := range opts {
 		opt(p)
@@ -70,10 +77,12 @@ func (p *profileClient) Get(ids []string, opts ...profileOption) (string, error)
 
 	idQuery := strings.Join(ids, ",")
 	skipQuery := strings.Join(p.skipPatterns, ",")
+	needPattern := strings.Join(p.needPattern, ",")
 
 	req.QueryParam.Add("id", idQuery)
 	req.QueryParam.Add("skippattern", skipQuery)
 	req.QueryParam.Add("extra", p.extraPattern)
+	req.QueryParam.Add("needpattern", needPattern)
 
 	res := struct {
 		Data string `json:"profile,omitempty"`

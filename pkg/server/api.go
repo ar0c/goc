@@ -106,6 +106,11 @@ func (gs *gocServer) getProfiles(c *gin.Context) {
 	if skippatternRaw != "" {
 		skippattern = strings.Split(skippatternRaw, ",")
 	}
+	neerpatternRaw := c.Query("needpattern")
+	var neerpattern []string
+	if neerpatternRaw != "" {
+		neerpattern = strings.Split(neerpatternRaw, ",")
+	}
 
 	extra := c.Query("extra")
 	isExtra := filterExtra(extra)
@@ -180,7 +185,7 @@ func (gs *gocServer) getProfiles(c *gin.Context) {
 			}
 
 			// check if skippattern matches
-			newProfile := filterProfileByPattern(skippattern, profile)
+			newProfile := filterProfileByPattern(skippattern, neerpattern, profile)
 
 			mu.Lock()
 			defer mu.Unlock()
@@ -315,13 +320,14 @@ func (gs *gocServer) watchProfileUpdate(c *gin.Context) {
 	<-gwc.exitCh
 }
 
-func filterProfileByPattern(skippattern []string, profiles []*cover.Profile) []*cover.Profile {
-
-	if len(skippattern) == 0 {
-		return profiles
-	}
+func filterProfileByPattern(skippattern []string, needpattern []string, profiles []*cover.Profile) []*cover.Profile {
 
 	var out = make([]*cover.Profile, 0)
+
+	if len(skippattern) == 0 {
+		goto need
+	}
+
 	for _, profile := range profiles {
 		skip := false
 		for _, pattern := range skippattern {
@@ -332,6 +338,22 @@ func filterProfileByPattern(skippattern []string, profiles []*cover.Profile) []*
 		}
 
 		if !skip {
+			out = append(out, profile)
+		}
+	}
+need:
+	if len(needpattern) == 0 {
+		return profiles
+	}
+	for _, profile := range profiles {
+		need := false
+		for _, pattern := range needpattern {
+			if strings.Contains(profile.FileName, pattern) {
+				need = true
+				break
+			}
+		}
+		if need {
 			out = append(out, profile)
 		}
 	}

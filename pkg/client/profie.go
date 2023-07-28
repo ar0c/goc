@@ -25,12 +25,13 @@ import (
 	"github.com/qiniu/goc/v2/pkg/log"
 )
 
-func GetProfile(host string, ids []string, skips []string, extra string, output string) {
+func GetProfile(host string, ids []string, skips []string, extra string, output string, need []string) {
 	gocClient := rest.NewV2Client(host)
 
 	profiles, err := gocClient.Profile().Get(ids,
 		profile.WithPackagePattern(skips),
-		profile.WithExtraPattern(extra))
+		profile.WithExtraPattern(extra),
+		profile.WithNeed(need))
 	if err != nil {
 		log.Fatalf("fail to get profile from the goc server: %v, response: %v", err, profiles)
 	}
