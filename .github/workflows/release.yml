@@ -7,7 +7,7 @@ jobs:
     name: release linux/amd64
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: Install Go
       uses: actions/setup-go@v2
       with:
@@ -24,7 +24,7 @@ jobs:
     name: release linux/386
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: Install Go
       uses: actions/setup-go@v2
       with:
@@ -41,7 +41,7 @@ jobs:
     name: release darwin/amd64
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: Install Go
       uses: actions/setup-go@v2
       with:
