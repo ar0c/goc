@@ -18,6 +18,8 @@ tar cvfz $ARCHIVE ${FILE_LIST}
 
 CHECKSUM=$(md5sum ${ARCHIVE} | cut -d ' ' -f 1)
 
+echo "-----------------------"$UPLOAD_URL
+
 curl \
   -X POST \
   --data-binary @${ARCHIVE} \
