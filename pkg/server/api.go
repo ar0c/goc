@@ -324,37 +324,34 @@ func filterProfileByPattern(skippattern []string, needpattern []string, profiles
 
 	var out = make([]*cover.Profile, 0)
 
-	if len(skippattern) == 0 {
-		goto need
-	}
+	if len(skippattern) != 0 {
+		for _, profile := range profiles {
+			skip := false
+			for _, pattern := range skippattern {
+				if strings.Contains(profile.FileName, pattern) {
+					skip = true
+					break
+				}
+			}
 
-	for _, profile := range profiles {
-		skip := false
-		for _, pattern := range skippattern {
-			if strings.Contains(profile.FileName, pattern) {
-				skip = true
-				break
+			if !skip {
+				out = append(out, profile)
 			}
 		}
+	}
 
-		if !skip {
-			out = append(out, profile)
-		}
-	}
-need:
-	if len(needpattern) == 0 {
-		return profiles
-	}
-	for _, profile := range profiles {
-		need := false
-		for _, pattern := range needpattern {
-			if strings.Contains(profile.FileName, pattern) {
-				need = true
-				break
+	if len(needpattern) != 0 {
+		for _, profile := range out {
+			need := false
+			for _, pattern := range needpattern {
+				if strings.Contains(profile.FileName, pattern) {
+					need = true
+					break
+				}
 			}
-		}
-		if need {
-			out = append(out, profile)
+			if need {
+				out = append(out, profile)
+			}
 		}
 	}
 
