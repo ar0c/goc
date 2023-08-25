@@ -17,6 +17,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"github.com/qiniu/goc/v2/cmd"
 	"math/rand"
 	"net/http"
 	"net/rpc"
@@ -89,7 +90,7 @@ func (agent *gocCoveredAgent) closeConnection() {
 	}
 }
 
-//  api 客户端，不是 agent
+// api 客户端，不是 agent
 type gocWatchClient struct {
 	ws     *websocket.Conn
 	exitCh chan int
@@ -130,7 +131,7 @@ func RunGocServerUntilExit(host string, s store.Store) error {
 	}
 
 	go gs.watchLoop()
-
+	log.Infof("version: %v", cmd.Version)
 	return r.Run(host)
 }
 

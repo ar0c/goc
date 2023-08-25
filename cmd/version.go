@@ -20,7 +20,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var version = "unstable"
+var Version = "unstable"
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
@@ -31,13 +31,13 @@ goc version
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// if it is "Unstable", means user build local or with go get
-		if version == "unstable" {
+		if Version == "unstable" {
 			if info, ok := debug.ReadBuildInfo(); ok {
 				fmt.Println(info.Main.Version)
 			}
 		} else {
 			// otherwise the value is injected in CI
-			fmt.Println(version)
+			fmt.Println(Version)
 		}
 	},
 }
