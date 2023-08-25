@@ -17,7 +17,6 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-	"github.com/qiniu/goc/v2/cmd"
 	"math/rand"
 	"net/http"
 	"net/rpc"
@@ -131,7 +130,6 @@ func RunGocServerUntilExit(host string, s store.Store) error {
 	}
 
 	go gs.watchLoop()
-	log.Infof("version: %v", cmd.Version)
 	return r.Run(host)
 }
 

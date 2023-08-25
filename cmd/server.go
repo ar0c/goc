@@ -36,6 +36,7 @@ var (
 func init() {
 	serverCmd.Flags().StringVarP(&serverHost, "host", "", "127.0.0.1:7777", "specify the host of the goc server")
 	serverCmd.Flags().StringVarP(&serverStore, "store", "", ".goc.kvstore", "specify the host of the goc server")
+	log.Infof("version: %v", Version)
 
 	rootCmd.AddCommand(serverCmd)
 }
