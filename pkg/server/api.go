@@ -323,6 +323,7 @@ func (gs *gocServer) watchProfileUpdate(c *gin.Context) {
 func filterProfileByPattern(skippattern []string, needpattern []string, profiles []*cover.Profile) []*cover.Profile {
 
 	var out = make([]*cover.Profile, 0)
+	var skipOut = make([]*cover.Profile, 0)
 
 	if len(skippattern) != 0 {
 		for _, profile := range profiles {
@@ -335,25 +336,28 @@ func filterProfileByPattern(skippattern []string, needpattern []string, profiles
 			}
 
 			if !skip {
-				out = append(out, profile)
+				skipOut = append(skipOut, profile)
 			}
 		}
+	}
+	log.Infof("skipOut len: %v", len(skipOut))
+	if len(needpattern) == 0 {
+		return skipOut
 	}
 
-	if len(needpattern) != 0 {
-		for _, profile := range out {
-			need := false
-			for _, pattern := range needpattern {
-				if strings.Contains(profile.FileName, pattern) {
-					need = true
-					break
-				}
-			}
-			if need {
-				out = append(out, profile)
+	for _, profile := range skipOut {
+		need := false
+		for _, pattern := range needpattern {
+			if strings.Contains(profile.FileName, pattern) {
+				need = true
+				break
 			}
 		}
+		if need {
+			out = append(out, profile)
+		}
 	}
+	log.Infof("need out len: %v", len(out))
 
 	return out
 }
