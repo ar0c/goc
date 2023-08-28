@@ -18,7 +18,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/qiniu/goc/v2/pkg/log"
+	"github.com/RickLeee/goc/v2/pkg/log"
 	"github.com/spf13/pflag"
 )
 
@@ -53,7 +53,6 @@ type Build struct {
 }
 
 // NewBuild creates a Build struct
-//
 func NewBuild(opts ...gocOption) *Build {
 	b := &Build{}
 

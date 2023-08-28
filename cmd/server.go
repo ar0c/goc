@@ -14,9 +14,9 @@
 package cmd
 
 import (
-	"github.com/qiniu/goc/v2/pkg/log"
-	"github.com/qiniu/goc/v2/pkg/server"
-	"github.com/qiniu/goc/v2/pkg/server/store"
+	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/RickLeee/goc/v2/pkg/server"
+	"github.com/RickLeee/goc/v2/pkg/server/store"
 	"github.com/spf13/cobra"
 )
 

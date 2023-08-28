@@ -14,7 +14,7 @@
 package cmd
 
 import (
-	"github.com/qiniu/goc/v2/pkg/build"
+	"github.com/RickLeee/goc/v2/pkg/build"
 	"github.com/spf13/cobra"
 )
 

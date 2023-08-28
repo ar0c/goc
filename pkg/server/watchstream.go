@@ -18,9 +18,9 @@ import (
 	"sync"
 	"time"
 
+	"github.com/RickLeee/goc/v2/pkg/log"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/qiniu/goc/v2/pkg/log"
 )
 
 func (gs *gocServer) serveWatchInternalStream(c *gin.Context) {

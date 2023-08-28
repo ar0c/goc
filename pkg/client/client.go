@@ -27,8 +27,8 @@ import (
 
 	"golang.org/x/term"
 
+	"github.com/RickLeee/goc/v2/pkg/log"
 	"github.com/olekukonko/tablewriter"
-	"github.com/qiniu/goc/v2/pkg/log"
 )
 
 // Action provides methods to contact with the covered agent under test

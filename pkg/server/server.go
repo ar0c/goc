@@ -25,10 +25,10 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/RickLeee/goc/v2/pkg/server/store"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/qiniu/goc/v2/pkg/log"
-	"github.com/qiniu/goc/v2/pkg/server/store"
 )
 
 // gocServer represents a goc server

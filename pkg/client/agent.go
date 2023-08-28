@@ -16,9 +16,9 @@ package client
 import (
 	"os"
 
+	"github.com/RickLeee/goc/v2/pkg/client/rest"
+	"github.com/RickLeee/goc/v2/pkg/log"
 	"github.com/olekukonko/tablewriter"
-	"github.com/qiniu/goc/v2/pkg/client/rest"
-	"github.com/qiniu/goc/v2/pkg/log"
 )
 
 const (

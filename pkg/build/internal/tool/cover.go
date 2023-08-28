@@ -18,7 +18,7 @@ import (
 	"os"
 	"sort"
 
-	"github.com/qiniu/goc/v2/pkg/log" // QINIU
+	"github.com/RickLeee/goc/v2/pkg/log" // QINIU
 	// "cmd/internal/edit"
 	// "cmd/internal/objabi"
 )
@@ -437,7 +437,7 @@ func (f *File) newCounter(start, end token.Pos, numStmt int) string {
 //	S1
 //	if cond {
 //		S2
-// 	}
+//	}
 //	S3
 //
 // counters will be added before S1 and before S3. The block containing S2

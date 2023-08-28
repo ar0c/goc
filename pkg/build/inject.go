@@ -19,9 +19,9 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/qiniu/goc/v2/pkg/build/internal/tool"
-	"github.com/qiniu/goc/v2/pkg/build/internal/websocket"
-	"github.com/qiniu/goc/v2/pkg/log"
+	"github.com/RickLeee/goc/v2/pkg/build/internal/tool"
+	"github.com/RickLeee/goc/v2/pkg/build/internal/websocket"
+	"github.com/RickLeee/goc/v2/pkg/log"
 )
 
 // Inject injects cover variables for all the .go files in the target directory
@@ -127,14 +127,14 @@ func (b *Build) getPkgTmpDir(pkgDir string) string {
 
 // injectGocAgent inject handlers like following
 //
-// - xxx.go
-// - yyy_package
-// - main.go
-// - goc-cover-agent-apis-auto-generated-11111-22222-bridge.go
-// - goc-cover-agent-apis-auto-generated-11111-22222-package
-//  |
-//  -- rpcagent.go
-//  -- watchagent.go
+//   - xxx.go
+//   - yyy_package
+//   - main.go
+//   - goc-cover-agent-apis-auto-generated-11111-22222-bridge.go
+//   - goc-cover-agent-apis-auto-generated-11111-22222-package
+//     |
+//     -- rpcagent.go
+//     -- watchagent.go
 //
 // 11111_22222_bridge.go 仅仅用于引用 11111_22222_package, where package contains ws agent main logic.
 // 使用 bridge.go 文件是为了避免插桩逻辑中的变量名污染 main 包
