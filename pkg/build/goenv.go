@@ -23,7 +23,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/RickLeee/goc-v2/pkg/log"
 )
 
 // readProjectMetaInfo reads all meta informations of the corresponding project

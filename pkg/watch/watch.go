@@ -16,7 +16,7 @@ package watch
 import (
 	"fmt"
 
-	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/RickLeee/goc-v2/pkg/log"
 	"github.com/gorilla/websocket"
 )
 

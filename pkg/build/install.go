@@ -17,7 +17,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/RickLeee/goc-v2/pkg/log"
 )
 
 func NewInstall(opts ...gocOption) *Build {

@@ -27,7 +27,7 @@ import (
 
 	"golang.org/x/term"
 
-	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/RickLeee/goc-v2/pkg/log"
 	"github.com/olekukonko/tablewriter"
 )
 

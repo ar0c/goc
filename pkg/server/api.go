@@ -22,7 +22,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/RickLeee/goc-v2/pkg/log"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/tools/cover"
 	"k8s.io/test-infra/gopherage/pkg/cov"

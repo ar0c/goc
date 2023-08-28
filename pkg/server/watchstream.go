@@ -18,7 +18,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/RickLeee/goc-v2/pkg/log"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )

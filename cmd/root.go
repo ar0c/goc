@@ -14,7 +14,7 @@
 package cmd
 
 import (
-	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/RickLeee/goc-v2/pkg/log"
 	"github.com/spf13/cobra"
 )
 
@@ -30,6 +30,7 @@ Find more information at:
 		log.DisplayGoc()
 		// init logger
 		log.NewLogger(globalDebug)
+
 	},
 
 	PersistentPostRun: func(cmd *cobra.Command, args []string) {

@@ -18,9 +18,9 @@ import (
 	"os/exec"
 	"os/signal"
 
-	"github.com/RickLeee/goc/v2/pkg/log"
-	"github.com/RickLeee/goc/v2/pkg/server"
-	"github.com/RickLeee/goc/v2/pkg/server/store"
+	"github.com/RickLeee/goc-v2/pkg/log"
+	"github.com/RickLeee/goc-v2/pkg/server"
+	"github.com/RickLeee/goc-v2/pkg/server/store"
 	"github.com/gin-gonic/gin"
 )
 
