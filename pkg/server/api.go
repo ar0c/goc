@@ -339,6 +339,8 @@ func filterProfileByPattern(skippattern []string, needpattern []string, profiles
 				skipOut = append(skipOut, profile)
 			}
 		}
+	} else {
+		return profiles
 	}
 	log.Infof("skipOut len: %v", len(skipOut))
 	if len(needpattern) == 0 {
