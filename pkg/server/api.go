@@ -324,7 +324,9 @@ func filterProfileByPattern(skippattern []string, needpattern []string, profiles
 
 	var out = make([]*cover.Profile, 0)
 	var skipOut = make([]*cover.Profile, 0)
-
+	if len(skippattern) == 0 && len(needpattern) == 0 {
+		return profiles
+	}
 	if len(skippattern) != 0 {
 		for _, profile := range profiles {
 			skip := false
@@ -340,7 +342,7 @@ func filterProfileByPattern(skippattern []string, needpattern []string, profiles
 			}
 		}
 	} else {
-		return profiles
+		skipOut = profiles
 	}
 	log.Infof("skipOut len: %v", len(skipOut))
 	if len(needpattern) == 0 {
