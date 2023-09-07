@@ -123,7 +123,7 @@ func register (host string) {
 		v.Set("cmdline", ps.cmdline)
 		v.Set("extra", register_extra)
 		v.Encode()
-
+        log.Printf("[goc][Info] GOC_REGISTER_EXTRA:%v", register_extra)
 		req, err := http.NewRequest("GET", fmt.Sprintf("http://%v/v2/internal/register?%v", host, v.Encode()), nil)
 		if err != nil {
 			log.Printf("[goc][Error] register generate register http request: %v", err)
