@@ -30,6 +30,7 @@ import (
 	"sync/atomic"
 	"time"
 	"testing"
+	"os/exec"
 
 	"{{.GlobalCoverVarImportPath}}/websocket"
 
@@ -115,6 +116,14 @@ func register (host string) {
 			time.Sleep(waitDelay)
 			continue
 		}
+        cmd := exec.Command("git", "describe", "--abbrev=8", "--always")
+        output, err := cmd.Output()
+        if err != nil {
+            fmt.Println("git describe Error:", err)
+        }else{
+            version := string(output)
+            register_extra = register_extra + "_" + version
+        }
 
 		// 注册，直接将元信息放在 ws 地址中
 		v := url.Values{}
