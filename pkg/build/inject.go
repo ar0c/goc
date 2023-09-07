@@ -16,6 +16,7 @@ package build
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path"
 	"path/filepath"
 
@@ -189,18 +190,28 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 	} else {
 		_coverMode = b.Mode
 	}
+	var CommitID string
+	cmd := exec.Command("git", "describe", "--abbrev=8", "--always")
+	output, err := cmd.Output()
+	if err != nil {
+		log.Errorf("git describe Error:", err)
+	} else {
+		CommitID = string(output)
+	}
 	tmplData := struct {
 		Covers                   []*PackageCover
 		GlobalCoverVarImportPath string
 		Package                  string
 		Host                     string
 		Mode                     string
+		CommitID                 string
 	}{
 		Covers:                   covers,
 		GlobalCoverVarImportPath: b.GlobalCoverVarImportPath,
 		Package:                  injectPkgName,
 		Host:                     b.Host,
 		Mode:                     _coverMode,
+		CommitID:                 CommitID,
 	}
 
 	if err := coverMainTmpl.Execute(f2, tmplData); err != nil {
