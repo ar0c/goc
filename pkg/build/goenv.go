@@ -64,13 +64,6 @@ func (b *Build) readProjectMetaInfo() {
 	// get GlobalCoverVarImportPath
 	b.GlobalCoverVarImportPath = path.Join(b.ImportPath, TmpFolderName(b.CurModProjectDir))
 	log.Donef("project meta information parsed")
-	cmd := exec.Command("git", "describe", "--abbrev=8", "--always")
-	output, err := cmd.Output()
-	if err != nil {
-		log.Errorf("git describe Error:", err)
-	} else {
-		b.CommitID = string(output)
-	}
 }
 
 // displayProjectMetaInfo prints basic infomation of this project to stdout

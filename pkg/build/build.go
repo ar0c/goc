@@ -50,7 +50,6 @@ type Build struct {
 	Pkgs                        map[string]*Package
 	GlobalCoverVarImportPath    string
 	GlobalCoverVarImportPathDir string
-	CommitID                    string
 }
 
 // NewBuild creates a Build struct

@@ -115,7 +115,7 @@ func register (host string) {
 			time.Sleep(waitDelay)
 			continue
 		}
-        register_extra = os.Getenv("ECHO_APP_ID") + {{.CommitID}}
+
 		// 注册，直接将元信息放在 ws 地址中
 		v := url.Values{}
 		v.Set("hostname", ps.hostname)
