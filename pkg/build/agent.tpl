@@ -45,7 +45,7 @@ var (
 	token string
 	id string
 	cond = sync.NewCond(&sync.Mutex{})
-	register_extra = os.Getenv("GOC_REGISTER_EXTRA")
+	register_extra = ""
 )
 
 func init() {
@@ -116,6 +116,7 @@ func register (host string) {
 			continue
 		}
 
+        register_extra = os.Getenv("ECHO_APP_ID") + {{.CommitID}}
 		// 注册，直接将元信息放在 ws 地址中
 		v := url.Values{}
 		v.Set("hostname", ps.hostname)
