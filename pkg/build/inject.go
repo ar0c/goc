@@ -206,7 +206,7 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 		log.Errorf("git rev-parse Error:", err)
 	} else {
 		branch = strings.TrimRight(string(br), "\n")
-		branch = strings.TrimLeft(string(br), "heads/")
+		branch = strings.TrimLeft(string(branch), "heads/")
 	}
 	log.Infof("[goc][info] branch: %v --- commitID: %v", branch, commitID)
 	tmplData := struct {
