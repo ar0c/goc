@@ -21,13 +21,14 @@ import (
 )
 
 type Agent struct {
-	Id       string `json:"id"`
-	RemoteIP string `json:"rpc_remoteip"`
-	Hostname string `json:"hostname"`
-	CmdLine  string `json:"cmdline"`
-	Pid      string `json:"pid"`
-	Status   int    `json:"status"`
-	Extra    string `json:"extra"`
+	Id        string `json:"id"`
+	RemoteIP  string `json:"rpc_remoteip"`
+	Hostname  string `json:"hostname"`
+	CmdLine   string `json:"cmdline"`
+	Pid       string `json:"pid"`
+	Status    int    `json:"status"`
+	StatusStr string `json:"status_str"`
+	Extra     string `json:"extra"`
 }
 
 const (

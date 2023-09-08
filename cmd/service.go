@@ -31,6 +31,7 @@ var (
 	listHost string
 	listWide bool
 	listIds  []string
+	listJson bool
 )
 
 func init() {
@@ -38,6 +39,7 @@ func init() {
 	add1Flags := func(f *pflag.FlagSet) {
 		f.StringVar(&listHost, "host", "127.0.0.1:7777", "specify the host of the goc server")
 		f.BoolVar(&listWide, "wide", false, "list all services with more information (such as pid)")
+		f.BoolVar(&listJson, "json", false, "list all services info as json format")
 		f.StringSliceVar(&listIds, "id", nil, "specify the ids of the services")
 	}
 
@@ -50,7 +52,7 @@ func init() {
 }
 
 func list(cmd *cobra.Command, args []string) {
-	client.ListAgents(listHost, listIds, listWide)
+	client.ListAgents(listHost, listIds, listWide, listJson)
 }
 
 var getServiceCmd = &cobra.Command{
@@ -59,7 +61,7 @@ var getServiceCmd = &cobra.Command{
 }
 
 func getAgents(cmd *cobra.Command, args []string) {
-	client.ListAgents(listHost, listIds, listWide)
+	client.ListAgents(listHost, listIds, listWide, listJson)
 }
 
 var deleteServiceCmd = &cobra.Command{

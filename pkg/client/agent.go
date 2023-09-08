@@ -14,6 +14,8 @@
 package client
 
 import (
+	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/RickLeee/goc-v2/pkg/client/rest"
@@ -27,7 +29,7 @@ const (
 	WATCHCONNECT = 1 << iota
 )
 
-func ListAgents(host string, ids []string, wide bool) {
+func ListAgents(host string, ids []string, wide, isJson bool) {
 	gocClient := rest.NewV2Client(host)
 
 	agents, err := gocClient.Agent().Get(ids)
@@ -35,8 +37,11 @@ func ListAgents(host string, ids []string, wide bool) {
 	if err != nil {
 		log.Fatalf("cannot get agent list from goc server: %v", err)
 	}
-
 	table := tablewriter.NewWriter(os.Stdout)
+	if isJson {
+		goto asJson
+	}
+
 	table.SetCenterSeparator("")
 	table.SetColumnSeparator("")
 	table.SetRowSeparator("")
@@ -54,6 +59,7 @@ func ListAgents(host string, ids []string, wide bool) {
 		table.SetHeader([]string{"ID", "STATUS", "REMOTEIP", "CMD"})
 		table.SetColumnAlignment([]int{tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT})
 	}
+asJson:
 	for _, agent := range agents {
 		var status string
 		if agent.Status == DISCONNECT {
@@ -61,14 +67,21 @@ func ListAgents(host string, ids []string, wide bool) {
 		} else if agent.Status&(RPCCONNECT|WATCHCONNECT) > 0 {
 			status = "CONNECT"
 		}
-		if wide {
-			table.Append([]string{agent.Id, status, agent.RemoteIP, agent.Hostname, agent.Pid, agent.CmdLine, agent.Extra})
-		} else {
-			preLen := len(agent.Id) + len(agent.RemoteIP) + 9
-			table.Append([]string{agent.Id, status, agent.RemoteIP, getSimpleCmdLine(preLen, agent.CmdLine)})
+		agent.StatusStr = status
+		if !isJson {
+			if wide {
+				table.Append([]string{agent.Id, status, agent.RemoteIP, agent.Hostname, agent.Pid, agent.CmdLine, agent.Extra})
+			} else {
+				preLen := len(agent.Id) + len(agent.RemoteIP) + 9
+				table.Append([]string{agent.Id, status, agent.RemoteIP, getSimpleCmdLine(preLen, agent.CmdLine)})
+			}
 		}
 	}
-	table.Render()
+	if !isJson {
+		table.Render()
+	}
+	b, _ := json.Marshal(agents)
+	fmt.Fprint(os.Stdout, string(b))
 }
 
 func DeleteAgents(host string, ids []string) {

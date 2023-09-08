@@ -79,6 +79,7 @@ func NewWorker(host string) Action {
 	}
 }
 
+// ListAgents Deprecated
 func (c *client) ListAgents(wide bool) {
 	u := fmt.Sprintf("%s%s", c.Host, CoverAgentsListAPI)
 	_, body, err := c.do("GET", u, "", nil)
