@@ -200,7 +200,7 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 		commitID = strings.TrimRight(string(output), "\n")
 	}
 	var branch string
-	cmd = exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
+	cmd = exec.Command("git", "branch", "--contains", commitID)
 	br, err := cmd.Output()
 	if err != nil {
 		log.Errorf("git rev-parse Error:", err)
