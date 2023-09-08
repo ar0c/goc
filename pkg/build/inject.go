@@ -19,6 +19,7 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"github.com/RickLeee/goc-v2/pkg/build/internal/tool"
 	"github.com/RickLeee/goc-v2/pkg/build/internal/websocket"
@@ -190,14 +191,15 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 	} else {
 		_coverMode = b.Mode
 	}
-	var CommitID string
+	var commitID string
 	cmd := exec.Command("git", "describe", "--abbrev=8", "--always")
 	output, err := cmd.Output()
 	if err != nil {
 		log.Errorf("git describe Error:", err)
 	} else {
-		CommitID = string(output)
+		commitID = strings.TrimRight(string(output), "\n")
 	}
+	log.Infof("[goc][info] commitID: %v", commitID)
 	tmplData := struct {
 		Covers                   []*PackageCover
 		GlobalCoverVarImportPath string
@@ -211,7 +213,7 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 		Package:                  injectPkgName,
 		Host:                     b.Host,
 		Mode:                     _coverMode,
-		CommitID:                 CommitID,
+		CommitID:                 commitID,
 	}
 
 	if err := coverMainTmpl.Execute(f2, tmplData); err != nil {

@@ -71,7 +71,7 @@ func (b *Build) displayProjectMetaInfo() {
 	log.Infof("GOPATH: %v", b.GOPATH)
 	log.Infof("GOBIN: %v", b.GOBIN)
 	log.Infof("Project Directory: %v", b.CurModProjectDir)
-	log.Infof("GOC_REGISTER_EXTRA: %v", os.Getenv("GOC_REGISTER_EXTRA"))
+	log.Infof("GOC_REGISTER_EXTRA from env: %v", os.Getenv("GOC_REGISTER_EXTRA"))
 	log.Infof("Temporary Project Directory: %v", b.TmpModProjectDir)
 	if b.IsVendorMod {
 		log.Infof("Project in vendor mod")
