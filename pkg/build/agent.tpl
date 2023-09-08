@@ -47,6 +47,7 @@ var (
 	cond = sync.NewCond(&sync.Mutex{})
 	register_extra = ""
 	commitID string = "{{.CommitID}}"
+	branch string = "{{.Branch}}"
 )
 
 func init() {
@@ -118,7 +119,7 @@ func register (host string) {
 		}
         app := os.Getenv("ECHO_APP_ID")
         log.Printf("app: %v, commit: %v", app, commitID)
-        register_extra = fmt.Sprintf("%v_%v", app, commitID)
+        register_extra = fmt.Sprintf("%v_%v_%v", app, branch, commitID)
 		// 注册，直接将元信息放在 ws 地址中
 		v := url.Values{}
 		v.Set("hostname", ps.hostname)

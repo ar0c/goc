@@ -199,7 +199,16 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 	} else {
 		commitID = strings.TrimRight(string(output), "\n")
 	}
-	log.Infof("[goc][info] commitID: %v", commitID)
+	var branch string
+	cmd = exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
+	br, err := cmd.Output()
+	if err != nil {
+		log.Errorf("git rev-parse Error:", err)
+	} else {
+		branch = strings.TrimRight(string(br), "\n")
+		branch = strings.TrimLeft(string(br), "heads/")
+	}
+	log.Infof("[goc][info] branch: %v --- commitID: %v", branch, commitID)
 	tmplData := struct {
 		Covers                   []*PackageCover
 		GlobalCoverVarImportPath string
@@ -207,12 +216,14 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 		Host                     string
 		Mode                     string
 		CommitID                 string
+		Branch                   string
 	}{
 		Covers:                   covers,
 		GlobalCoverVarImportPath: b.GlobalCoverVarImportPath,
 		Package:                  injectPkgName,
 		Host:                     b.Host,
 		Mode:                     _coverMode,
+		Branch:                   branch,
 		CommitID:                 commitID,
 	}
 
