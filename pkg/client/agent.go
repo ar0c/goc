@@ -79,9 +79,10 @@ asJson:
 	}
 	if !isJson {
 		table.Render()
+	} else {
+		b, _ := json.Marshal(agents)
+		fmt.Fprint(os.Stdout, string(b))
 	}
-	b, _ := json.Marshal(agents)
-	fmt.Fprint(os.Stdout, string(b))
 }
 
 func DeleteAgents(host string, ids []string) {
