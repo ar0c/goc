@@ -41,6 +41,7 @@ jobs:
 
   release-darwin-amd64:
     name: release darwin/amd64
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
