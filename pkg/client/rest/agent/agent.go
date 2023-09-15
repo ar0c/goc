@@ -15,6 +15,7 @@ package agent
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/go-resty/resty/v2"
@@ -72,7 +73,7 @@ func (a *agentsClient) Get(ids []string) ([]Agent, error) {
 
 	err = json.Unmarshal(resp.Body(), &res)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("unmarshal response body failed: %v, resp body: %v", err, string(resp.Body()))
 	}
 
 	return res.Items, nil
