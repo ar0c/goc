@@ -203,9 +203,10 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 	cmd = exec.Command("git", "branch", "--contains", commitID, "-r")
 	br, err := cmd.Output()
 	if err != nil {
-		log.Errorf("git rev-parse Error:", err)
+		log.Errorf("get git branch Error:", err)
 	} else {
-		branch = strings.TrimRight(string(br), "\n")
+		log.Infof("[goc][info] raw branch: %v ", branch)
+		branch = strings.Replace(string(br), "\n", "", -1)
 		branch = strings.TrimLeft(branch, "heads/")
 		branch = strings.Trim(branch, " ")
 	}
