@@ -192,7 +192,7 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 		_coverMode = b.Mode
 	}
 	var commitID string
-	cmd := exec.Command("git", "describe", "--abbrev=8", "--always")
+	cmd := exec.Command("git", "rev-parse", "--short=8", "HEAD")
 	output, err := cmd.Output()
 	if err != nil {
 		log.Errorf("git describe Error:", err)
