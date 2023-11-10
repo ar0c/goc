@@ -16,6 +16,8 @@ package agent
 import (
 	"encoding/json"
 	"fmt"
+	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/go-resty/resty/v2"
@@ -57,6 +59,11 @@ func (a *agentsClient) Get(ids []string) ([]Agent, error) {
 
 	req := a.c.R()
 
+	sort.Slice(ids, func(i, j int) bool {
+		x, _ := strconv.Atoi(ids[i])
+		y, _ := strconv.Atoi(ids[j])
+		return x > y
+	})
 	idQuery := strings.Join(ids, ",")
 
 	req.QueryParam.Add("id", idQuery)
