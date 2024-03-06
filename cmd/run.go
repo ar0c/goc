@@ -14,34 +14,34 @@
 package cmd
 
 import (
-	"github.com/RickLeee/goc-v2/pkg/build"
-	"github.com/spf13/cobra"
+    "github.com/RickLeee/goc/v2/pkg/build"
+    "github.com/spf13/cobra"
 )
 
 var runCmd = &cobra.Command{
-	Use: "run",
-	Run: runAction,
+    Use: "run",
+    Run: runAction,
 
-	DisableFlagParsing: true, // run 命令需要用原生 go 的方式处理 flags
+    DisableFlagParsing: true, // run 命令需要用原生 go 的方式处理 flags
 }
 
 func init() {
-	runCmd.Flags().StringVarP(&gocmode, "gocmode", "", "count", "coverage mode: set, count, atomic, watch")
-	runCmd.Flags().StringVarP(&gochost, "gochost", "", "127.0.0.1:7777", "specify the host of the goc sever")
-	rootCmd.AddCommand(runCmd)
+    runCmd.Flags().StringVarP(&gocmode, "gocmode", "", "count", "coverage mode: set, count, atomic, watch")
+    runCmd.Flags().StringVarP(&gochost, "gochost", "", "127.0.0.1:7777", "specify the host of the goc sever")
+    rootCmd.AddCommand(runCmd)
 }
 
 func runAction(cmd *cobra.Command, args []string) {
 
-	sets := build.CustomParseCmdAndArgs(cmd, args)
+    sets := build.CustomParseCmdAndArgs(cmd, args)
 
-	b := build.NewRun(
-		build.WithHost(gochost),
-		build.WithMode(gocmode),
-		build.WithFlagSets(sets),
-		build.WithArgs(args),
-		build.WithBuild(),
-		build.WithDebug(globalDebug),
-	)
-	b.Run()
+    b := build.NewRun(
+        build.WithHost(gochost),
+        build.WithMode(gocmode),
+        build.WithFlagSets(sets),
+        build.WithArgs(args),
+        build.WithBuild(),
+        build.WithDebug(globalDebug),
+    )
+    b.Run()
 }

@@ -14,61 +14,61 @@
 package cmd
 
 import (
-	"github.com/RickLeee/goc-v2/pkg/client"
-	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
+    "github.com/RickLeee/goc/v2/pkg/client"
+    "github.com/spf13/cobra"
+    "github.com/spf13/pflag"
 )
 
 var listCmd = &cobra.Command{
-	Use:   "service",
-	Short: "Deal with the registered services",
-	Long: `It can be used to list, remove the registered services. 
+    Use:   "service",
+    Short: "Deal with the registered services",
+    Long: `It can be used to list, remove the registered services. 
 For disconnected services, remove will delete these serivces forever, 
 for connected services remove will force these services register again.`,
 }
 
 var (
-	listHost string
-	listWide bool
-	listIds  []string
-	listJson bool
+    listHost string
+    listWide bool
+    listIds  []string
+    listJson bool
 )
 
 func init() {
 
-	add1Flags := func(f *pflag.FlagSet) {
-		f.StringVar(&listHost, "host", "127.0.0.1:7777", "specify the host of the goc server")
-		f.BoolVar(&listWide, "wide", false, "list all services with more information (such as pid)")
-		f.BoolVar(&listJson, "json", false, "list all services info as json format")
-		f.StringSliceVar(&listIds, "id", nil, "specify the ids of the services")
-	}
+    add1Flags := func(f *pflag.FlagSet) {
+        f.StringVar(&listHost, "host", "127.0.0.1:7777", "specify the host of the goc server")
+        f.BoolVar(&listWide, "wide", false, "list all services with more information (such as pid)")
+        f.BoolVar(&listJson, "json", false, "list all services info as json format")
+        f.StringSliceVar(&listIds, "id", nil, "specify the ids of the services")
+    }
 
-	add1Flags(getServiceCmd.Flags())
-	add1Flags(deleteServiceCmd.Flags())
+    add1Flags(getServiceCmd.Flags())
+    add1Flags(deleteServiceCmd.Flags())
 
-	listCmd.AddCommand(getServiceCmd)
-	listCmd.AddCommand(deleteServiceCmd)
-	rootCmd.AddCommand(listCmd)
+    listCmd.AddCommand(getServiceCmd)
+    listCmd.AddCommand(deleteServiceCmd)
+    rootCmd.AddCommand(listCmd)
 }
 
 func list(cmd *cobra.Command, args []string) {
-	client.ListAgents(listHost, listIds, listWide, listJson)
+    client.ListAgents(listHost, listIds, listWide, listJson)
 }
 
 var getServiceCmd = &cobra.Command{
-	Use: "get",
-	Run: getAgents,
+    Use: "get",
+    Run: getAgents,
 }
 
 func getAgents(cmd *cobra.Command, args []string) {
-	client.ListAgents(listHost, listIds, listWide, listJson)
+    client.ListAgents(listHost, listIds, listWide, listJson)
 }
 
 var deleteServiceCmd = &cobra.Command{
-	Use: "delete",
-	Run: deleteAgents,
+    Use: "delete",
+    Run: deleteAgents,
 }
 
 func deleteAgents(cmd *cobra.Command, args []string) {
-	client.DeleteAgents(listHost, listIds)
+    client.DeleteAgents(listHost, listIds)
 }

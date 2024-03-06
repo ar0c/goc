@@ -14,61 +14,61 @@
 package client
 
 import (
-	"bytes"
-	"fmt"
-	"io"
-	"os"
-	"path/filepath"
+    "bytes"
+    "fmt"
+    "io"
+    "os"
+    "path/filepath"
 
-	"github.com/RickLeee/goc-v2/pkg/client/rest"
-	"github.com/RickLeee/goc-v2/pkg/client/rest/profile"
-	"github.com/RickLeee/goc-v2/pkg/log"
+    "github.com/RickLeee/goc/v2/pkg/client/rest"
+    "github.com/RickLeee/goc/v2/pkg/client/rest/profile"
+    "github.com/RickLeee/goc/v2/pkg/log"
 )
 
 func GetProfile(host string, ids []string, skips []string, extra string, output string, need []string) {
-	gocClient := rest.NewV2Client(host)
+    gocClient := rest.NewV2Client(host)
 
-	profiles, err := gocClient.Profile().Get(ids,
-		profile.WithPackagePattern(skips),
-		profile.WithExtraPattern(extra),
-		profile.WithNeed(need))
-	if err != nil {
-		log.Fatalf("fail to get profile from the goc server: %v, response: %v", err, profiles)
-	}
+    profiles, err := gocClient.Profile().Get(ids,
+        profile.WithPackagePattern(skips),
+        profile.WithExtraPattern(extra),
+        profile.WithNeed(need))
+    if err != nil {
+        log.Fatalf("fail to get profile from the goc server: %v, response: %v", err, profiles)
+    }
 
-	if output == "" {
-		fmt.Fprint(os.Stdout, profiles)
-	} else {
-		var dir, filename string = filepath.Split(output)
-		if dir != "" {
-			err = os.MkdirAll(dir, os.ModePerm)
-			if err != nil {
-				log.Fatalf("failed to create directory %s, err:%v", dir, err)
-			}
-		}
-		if filename == "" {
-			output += "coverage.cov"
-		}
+    if output == "" {
+        fmt.Fprint(os.Stdout, profiles)
+    } else {
+        var dir, filename string = filepath.Split(output)
+        if dir != "" {
+            err = os.MkdirAll(dir, os.ModePerm)
+            if err != nil {
+                log.Fatalf("failed to create directory %s, err:%v", dir, err)
+            }
+        }
+        if filename == "" {
+            output += "coverage.cov"
+        }
 
-		f, err := os.Create(output)
-		if err != nil {
-			log.Fatalf("failed to create file %s, err:%v", output, err)
-		}
-		defer f.Close()
-		_, err = io.Copy(f, bytes.NewReader([]byte(profiles)))
-		if err != nil {
-			log.Fatalf("failed to write file: %v, err: %v", output, err)
-		}
-	}
+        f, err := os.Create(output)
+        if err != nil {
+            log.Fatalf("failed to create file %s, err:%v", output, err)
+        }
+        defer f.Close()
+        _, err = io.Copy(f, bytes.NewReader([]byte(profiles)))
+        if err != nil {
+            log.Fatalf("failed to write file: %v, err: %v", output, err)
+        }
+    }
 }
 
 func ClearProfile(host string, ids []string, extra string) {
-	gocClient := rest.NewV2Client(host)
+    gocClient := rest.NewV2Client(host)
 
-	err := gocClient.Profile().Delete(ids,
-		profile.WithExtraPattern(extra))
+    err := gocClient.Profile().Delete(ids,
+        profile.WithExtraPattern(extra))
 
-	if err != nil {
-		log.Fatalf("fail to clear the profile: %v", err)
-	}
+    if err != nil {
+        log.Fatalf("fail to clear the profile: %v", err)
+    }
 }

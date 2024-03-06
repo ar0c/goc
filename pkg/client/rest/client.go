@@ -14,26 +14,26 @@
 package rest
 
 import (
-	"github.com/RickLeee/goc-v2/pkg/client/rest/agent"
-	"github.com/RickLeee/goc-v2/pkg/client/rest/profile"
-	"github.com/go-resty/resty/v2"
+    "github.com/RickLeee/goc/v2/pkg/client/rest/agent"
+    "github.com/RickLeee/goc/v2/pkg/client/rest/profile"
+    "github.com/go-resty/resty/v2"
 )
 
 // V2Client provides methods contact with the covered agent under test
 type V2Client struct {
-	rest *resty.Client
+    rest *resty.Client
 }
 
 func NewV2Client(host string) *V2Client {
-	return &V2Client{
-		rest: resty.New().SetHostURL("http://" + host),
-	}
+    return &V2Client{
+        rest: resty.New().SetHostURL("http://" + host),
+    }
 }
 
 func (c *V2Client) Agent() agent.AgentInterface {
-	return agent.NewAgentsClient(c.rest)
+    return agent.NewAgentsClient(c.rest)
 }
 
 func (c *V2Client) Profile() profile.ProfileInterface {
-	return profile.NewProfileClient(c.rest)
+    return profile.NewProfileClient(c.rest)
 }

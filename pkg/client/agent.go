@@ -14,83 +14,83 @@
 package client
 
 import (
-	"encoding/json"
-	"fmt"
-	"os"
+    "encoding/json"
+    "fmt"
+    "os"
 
-	"github.com/RickLeee/goc-v2/pkg/client/rest"
-	"github.com/RickLeee/goc-v2/pkg/log"
-	"github.com/olekukonko/tablewriter"
+    "github.com/RickLeee/goc/v2/pkg/client/rest"
+    "github.com/RickLeee/goc/v2/pkg/log"
+    "github.com/olekukonko/tablewriter"
 )
 
 const (
-	DISCONNECT   = 1 << iota
-	RPCCONNECT   = 1 << iota
-	WATCHCONNECT = 1 << iota
+    DISCONNECT   = 1 << iota
+    RPCCONNECT   = 1 << iota
+    WATCHCONNECT = 1 << iota
 )
 
 func ListAgents(host string, ids []string, wide, isJson bool) {
-	gocClient := rest.NewV2Client(host)
+    gocClient := rest.NewV2Client(host)
 
-	agents, err := gocClient.Agent().Get(ids)
+    agents, err := gocClient.Agent().Get(ids)
 
-	if err != nil {
-		log.Fatalf("cannot get agent list from goc server: %v", err)
-	}
-	table := tablewriter.NewWriter(os.Stdout)
-	if isJson {
-		goto asJson
-	}
+    if err != nil {
+        log.Fatalf("cannot get agent list from goc server: %v", err)
+    }
+    table := tablewriter.NewWriter(os.Stdout)
+    if isJson {
+        goto asJson
+    }
 
-	table.SetCenterSeparator("")
-	table.SetColumnSeparator("")
-	table.SetRowSeparator("")
-	table.SetHeaderLine(false)
-	table.SetBorder(false)
-	table.SetTablePadding("   ") // pad with 3 blank spaces
-	table.SetNoWhiteSpace(true)
-	table.SetReflowDuringAutoWrap(false)
-	table.SetHeaderAlignment(tablewriter.ALIGN_LEFT)
-	table.SetAutoWrapText(false)
-	if wide {
-		table.SetHeader([]string{"ID", "STATUS", "REMOTEIP", "HOSTNAME", "PID", "CMD", "EXTRA"})
-		table.SetColumnAlignment([]int{tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT})
-	} else {
-		table.SetHeader([]string{"ID", "STATUS", "REMOTEIP", "CMD"})
-		table.SetColumnAlignment([]int{tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT})
-	}
+    table.SetCenterSeparator("")
+    table.SetColumnSeparator("")
+    table.SetRowSeparator("")
+    table.SetHeaderLine(false)
+    table.SetBorder(false)
+    table.SetTablePadding("   ") // pad with 3 blank spaces
+    table.SetNoWhiteSpace(true)
+    table.SetReflowDuringAutoWrap(false)
+    table.SetHeaderAlignment(tablewriter.ALIGN_LEFT)
+    table.SetAutoWrapText(false)
+    if wide {
+        table.SetHeader([]string{"ID", "STATUS", "REMOTEIP", "HOSTNAME", "PID", "CMD", "EXTRA"})
+        table.SetColumnAlignment([]int{tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT})
+    } else {
+        table.SetHeader([]string{"ID", "STATUS", "REMOTEIP", "CMD"})
+        table.SetColumnAlignment([]int{tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT, tablewriter.ALIGN_LEFT})
+    }
 asJson:
-	for _, agent := range agents {
-		var status string
-		if agent.Status == DISCONNECT {
-			status = "DISCONNECT"
-		} else if agent.Status&(RPCCONNECT|WATCHCONNECT) > 0 {
-			status = "CONNECT"
-		}
-		agent.StatusStr = status
-		if !isJson {
-			if wide {
-				table.Append([]string{agent.Id, status, agent.RemoteIP, agent.Hostname, agent.Pid, agent.CmdLine, agent.Extra})
-			} else {
-				preLen := len(agent.Id) + len(agent.RemoteIP) + 9
-				table.Append([]string{agent.Id, status, agent.RemoteIP, getSimpleCmdLine(preLen, agent.CmdLine)})
-			}
-		}
-	}
-	if !isJson {
-		table.Render()
-	} else {
-		b, _ := json.Marshal(agents)
-		fmt.Fprint(os.Stdout, string(b))
-	}
+    for _, agent := range agents {
+        var status string
+        if agent.Status == DISCONNECT {
+            status = "DISCONNECT"
+        } else if agent.Status&(RPCCONNECT|WATCHCONNECT) > 0 {
+            status = "CONNECT"
+        }
+        agent.StatusStr = status
+        if !isJson {
+            if wide {
+                table.Append([]string{agent.Id, status, agent.RemoteIP, agent.Hostname, agent.Pid, agent.CmdLine, agent.Extra})
+            } else {
+                preLen := len(agent.Id) + len(agent.RemoteIP) + 9
+                table.Append([]string{agent.Id, status, agent.RemoteIP, getSimpleCmdLine(preLen, agent.CmdLine)})
+            }
+        }
+    }
+    if !isJson {
+        table.Render()
+    } else {
+        b, _ := json.Marshal(agents)
+        fmt.Fprint(os.Stdout, string(b))
+    }
 }
 
 func DeleteAgents(host string, ids []string) {
-	gocClient := rest.NewV2Client(host)
+    gocClient := rest.NewV2Client(host)
 
-	err := gocClient.Agent().Delete(ids)
+    err := gocClient.Agent().Delete(ids)
 
-	if err != nil {
-		log.Fatalf("cannot delete agents from goc server: %v", err)
-	}
+    if err != nil {
+        log.Fatalf("cannot delete agents from goc server: %v", err)
+    }
 }
