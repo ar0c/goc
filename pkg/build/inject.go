@@ -195,7 +195,7 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 	cmd := exec.Command("git", "rev-parse", "--short=8", "HEAD")
 	output, err := cmd.Output()
 	if err != nil {
-		log.Errorf("git describe Error:", err)
+		log.Errorf("git describe Error: %v", err)
 	} else {
 		commitID = strings.TrimRight(string(output), "\n")
 	}
@@ -203,13 +203,14 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 	cmd = exec.Command("git", "branch", "--contains", commitID, "-r")
 	br, err := cmd.Output()
 	if err != nil {
-		log.Errorf("get git branch Error:", err)
+		log.Errorf("get git branch Error: %v", err)
 	} else {
 		log.Infof("[goc][info] raw branch: %v ", br)
 		branch = strings.Replace(string(br), "\n", "", -1)
 		branch = strings.TrimLeft(branch, "heads/")
 		branch = strings.Trim(branch, " ")
 		branch = strings.Replace(branch, "/", "-", -1)
+		branch = strings.Replace(branch, "_", "-", -1)
 	}
 	log.Infof("[goc][info] branch: %v --- commitID: %v", branch, commitID)
 	tmplData := struct {
