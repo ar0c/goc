@@ -195,7 +195,7 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 	cmd := exec.Command("git", "rev-parse", "--short=8", "HEAD")
 	output, err := cmd.Output()
 	if err != nil {
-		log.Errorf("git describe Error: %v", err)
+		log.Errorf("git rev-parse Error: %v", err)
 	} else {
 		commitID = strings.TrimRight(string(output), "\n")
 	}
@@ -206,11 +206,7 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 		log.Errorf("get git branch Error: %v", err)
 	} else {
 		log.Infof("[goc][info] raw branch: %v ", br)
-		branch = strings.Replace(string(br), "\n", "", -1)
-		branch = strings.TrimLeft(branch, "heads/")
-		branch = strings.Trim(branch, " ")
-		branch = strings.Replace(branch, "/", "-", -1)
-		branch = strings.Replace(branch, "_", "-", -1)
+		branch = fmtBranch(br)
 	}
 	log.Infof("[goc][info] branch: %v --- commitID: %v", branch, commitID)
 	tmplData := struct {
@@ -316,4 +312,12 @@ func UploadCoverChangeEvent_%v(name string, pos []uint32, i int, stmts uint16) {
 	if err != nil {
 		log.Fatalf("fail to write to global cover definition file: %v", err)
 	}
+}
+
+func fmtBranch(br []byte) (branch string) {
+	branch = strings.Replace(string(br), "\n", "", -1)
+	branch = strings.TrimLeft(branch, "heads/")
+	branch = strings.Trim(branch, " ")
+	branch = strings.Replace(branch, "/", "-", -1)
+	return
 }
