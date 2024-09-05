@@ -205,7 +205,6 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 	if err != nil {
 		log.Errorf("get git branch Error: %v", err)
 	} else {
-		log.Infof("[goc][info] raw branch: %v ", br)
 		branch = fmtBranch(br)
 	}
 	log.Infof("[goc][info] branch: %v --- commitID: %v", branch, commitID)

@@ -1,6 +1,8 @@
 module github.com/RickLeee/goc/v2
 
-go 1.22
+go 1.22.0
+
+toolchain go1.22.5
 
 require (
 	github.com/gin-gonic/gin v1.7.2
@@ -17,9 +19,9 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/tongjingran/copy v1.4.2
 	go.uber.org/zap v1.17.0
-	golang.org/x/mod v0.4.2
-	golang.org/x/term v0.0.0-20210220032956-6a3ed077a48d
-	golang.org/x/tools v0.1.3
+	golang.org/x/mod v0.21.0
+	golang.org/x/term v0.12.0
+	golang.org/x/tools v0.13.0
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 	k8s.io/kubectl v0.21.2
 	k8s.io/test-infra v0.0.0-20210618100605-34aa2f2aa75b
@@ -54,13 +56,12 @@ require (
 	github.com/ugorji/go/codec v1.1.7 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
-	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83 // indirect
-	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781 // indirect
+	golang.org/x/crypto v0.13.0 // indirect
+	golang.org/x/net v0.15.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20200902213428-5d25da1a8d43 // indirect
-	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
-	golang.org/x/text v0.3.6 // indirect
+	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/time v0.0.0-20210220033141-f8bda1e9f3ba // indirect
-	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
