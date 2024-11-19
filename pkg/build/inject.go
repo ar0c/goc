@@ -216,6 +216,7 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 		Mode                     string
 		CommitID                 string
 		Branch                   string
+		Extra                    string
 	}{
 		Covers:                   covers,
 		GlobalCoverVarImportPath: b.GlobalCoverVarImportPath,
@@ -224,6 +225,7 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 		Mode:                     _coverMode,
 		Branch:                   branch,
 		CommitID:                 commitID,
+		Extra:                    b.Extra,
 	}
 
 	if err := coverMainTmpl.Execute(f2, tmplData); err != nil {

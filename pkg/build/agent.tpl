@@ -45,9 +45,9 @@ var (
 	token string
 	id string
 	cond = sync.NewCond(&sync.Mutex{})
-	register_extra = ""
 	commitID string = "{{.CommitID}}"
 	branch string = "{{.Branch}}"
+	register_extra = "{{.Extra}}"
 )
 
 func init() {
@@ -55,6 +55,11 @@ func init() {
 	host_env := os.Getenv("GOC_CUSTOM_HOST")
 	if host_env != "" {
 		host = host_env
+	}
+
+	// init extra information
+	if os.Getenv("GOC_REGISTER_EXTRA") != "" {
+		register_extra = os.Getenv("GOC_REGISTER_EXTRA")
 	}
 
 	var dialer = websocket.DefaultDialer
