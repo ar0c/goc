@@ -14,9 +14,9 @@
 package main
 
 import (
-    "github.com/RickLeee/goc/v2/cmd"
+	"github.com/ar0c/goc/v2/cmd"
 )
 
 func main() {
-    cmd.Execute()
+	cmd.Execute()
 }

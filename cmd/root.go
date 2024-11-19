@@ -14,38 +14,38 @@
 package cmd
 
 import (
-    "github.com/RickLeee/goc/v2/pkg/log"
-    "github.com/spf13/cobra"
+	"github.com/ar0c/goc/v2/pkg/log"
+	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
-    Use:   "goc",
-    Short: "goc is a comprehensive coverage testing tool for go language",
-    Long: `goc is a comprehensive coverage testing tool for go language.
+	Use:   "goc",
+	Short: "goc is a comprehensive coverage testing tool for go language",
+	Long: `goc is a comprehensive coverage testing tool for go language.
 
 Find more information at:
  https://github.com/qiniu/goc
 `,
-    PersistentPreRun: func(cmd *cobra.Command, args []string) {
-        //log.DisplayGoc()
-        // init logger
-        log.NewLogger(globalDebug)
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		//log.DisplayGoc()
+		// init logger
+		log.NewLogger(globalDebug)
 
-    },
+	},
 
-    PersistentPostRun: func(cmd *cobra.Command, args []string) {
-        log.Sync()
-    },
+	PersistentPostRun: func(cmd *cobra.Command, args []string) {
+		log.Sync()
+	},
 }
 
 var globalDebug bool
 
 func init() {
-    rootCmd.PersistentFlags().BoolVar(&globalDebug, "gocdebug", false, "run goc in debug mode")
+	rootCmd.PersistentFlags().BoolVar(&globalDebug, "gocdebug", false, "run goc in debug mode")
 }
 
 // Execute the goc tool
 func Execute() {
-    if err := rootCmd.Execute(); err != nil {
-    }
+	if err := rootCmd.Execute(); err != nil {
+	}
 }

@@ -14,26 +14,26 @@
 package watch
 
 import (
-    "fmt"
+	"fmt"
 
-    "github.com/RickLeee/goc/v2/pkg/log"
-    "github.com/gorilla/websocket"
+	"github.com/ar0c/goc/v2/pkg/log"
+	"github.com/gorilla/websocket"
 )
 
 func Watch(host string) {
-    watchUrl := fmt.Sprintf("ws://%v/v2/cover/ws/watch", host)
-    c, _, err := websocket.DefaultDialer.Dial(watchUrl, nil)
-    if err != nil {
-        log.Fatalf("cannot connect to goc server: %v", err)
-    }
-    defer c.Close()
+	watchUrl := fmt.Sprintf("ws://%v/v2/cover/ws/watch", host)
+	c, _, err := websocket.DefaultDialer.Dial(watchUrl, nil)
+	if err != nil {
+		log.Fatalf("cannot connect to goc server: %v", err)
+	}
+	defer c.Close()
 
-    for {
-        _, message, err := c.ReadMessage()
-        if err != nil {
-            log.Fatalf("cannot read message: %v", err)
-        }
+	for {
+		_, message, err := c.ReadMessage()
+		if err != nil {
+			log.Fatalf("cannot read message: %v", err)
+		}
 
-        log.Infof("profile update: %v", string(message))
-    }
+		log.Infof("profile update: %v", string(message))
+	}
 }

@@ -18,7 +18,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/ar0c/goc/v2/pkg/log"
 	"github.com/spf13/pflag"
 )
 

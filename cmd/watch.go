@@ -14,28 +14,28 @@
 package cmd
 
 import (
-    cli "github.com/RickLeee/goc/v2/pkg/watch"
-    "github.com/spf13/cobra"
+	cli "github.com/ar0c/goc/v2/pkg/watch"
+	"github.com/spf13/cobra"
 )
 
 var watchCmd = &cobra.Command{
-    Use:     "watch",
-    Short:   "watch for profile's real time update",
-    Long:    "watch for profile's real time update",
-    Example: "",
+	Use:     "watch",
+	Short:   "watch for profile's real time update",
+	Long:    "watch for profile's real time update",
+	Example: "",
 
-    Run: watch,
+	Run: watch,
 }
 
 var (
-    watchHost string
+	watchHost string
 )
 
 func init() {
-    watchCmd.Flags().StringVarP(&watchHost, "host", "", "127.0.0.1:7777", "specify the host of the goc server")
-    rootCmd.AddCommand(watchCmd)
+	watchCmd.Flags().StringVarP(&watchHost, "host", "", "127.0.0.1:7777", "specify the host of the goc server")
+	rootCmd.AddCommand(watchCmd)
 }
 
 func watch(cmd *cobra.Command, args []string) {
-    cli.Watch(watchHost)
+	cli.Watch(watchHost)
 }

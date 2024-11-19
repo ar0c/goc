@@ -21,9 +21,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/RickLeee/goc/v2/pkg/build/internal/tool"
-	"github.com/RickLeee/goc/v2/pkg/build/internal/websocket"
-	"github.com/RickLeee/goc/v2/pkg/log"
+	"github.com/ar0c/goc/v2/pkg/build/internal/tool"
+	"github.com/ar0c/goc/v2/pkg/build/internal/websocket"
+	"github.com/ar0c/goc/v2/pkg/log"
 )
 
 // Inject injects cover variables for all the .go files in the target directory

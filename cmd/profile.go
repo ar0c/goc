@@ -14,65 +14,65 @@
 package cmd
 
 import (
-    "github.com/RickLeee/goc/v2/pkg/client"
-    "github.com/spf13/cobra"
-    "github.com/spf13/pflag"
+	"github.com/ar0c/goc/v2/pkg/client"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 var profileCmd = &cobra.Command{
-    Use:   "profile",
-    Short: "Get coverage profile from service registry center",
-    Long:  `Get code coverage profile for the services under test at runtime.`,
-    //Run: profile,
+	Use:   "profile",
+	Short: "Get coverage profile from service registry center",
+	Long:  `Get code coverage profile for the services under test at runtime.`,
+	//Run: profile,
 }
 
 var (
-    profileHost        string
-    profileOutput      string // --output flag
-    profileIds         []string
-    profileSkipPattern []string
-    profileExtra       string
-    profileNeedPattern []string
+	profileHost        string
+	profileOutput      string // --output flag
+	profileIds         []string
+	profileSkipPattern []string
+	profileExtra       string
+	profileNeedPattern []string
 )
 
 func init() {
 
-    add1Flags := func(f *pflag.FlagSet) {
-        f.StringVar(&profileHost, "host", "127.0.0.1:7777", "specify the host of the goc server")
-        f.StringSliceVar(&profileIds, "id", nil, "specify the ids of the services")
-        f.StringVar(&profileExtra, "extra", "", "specify the regex expression of extra, only profile with extra information will be downloaded")
-    }
+	add1Flags := func(f *pflag.FlagSet) {
+		f.StringVar(&profileHost, "host", "127.0.0.1:7777", "specify the host of the goc server")
+		f.StringSliceVar(&profileIds, "id", nil, "specify the ids of the services")
+		f.StringVar(&profileExtra, "extra", "", "specify the regex expression of extra, only profile with extra information will be downloaded")
+	}
 
-    add2Flags := func(f *pflag.FlagSet) {
-        f.StringVarP(&profileOutput, "output", "o", "", "download cover profile")
-        f.StringSliceVar(&profileSkipPattern, "skip", nil, "skip specific packages in the profile")
-        f.StringSliceVarP(&profileNeedPattern, "need", "n", nil, "find specific packages in the profile")
-    }
+	add2Flags := func(f *pflag.FlagSet) {
+		f.StringVarP(&profileOutput, "output", "o", "", "download cover profile")
+		f.StringSliceVar(&profileSkipPattern, "skip", nil, "skip specific packages in the profile")
+		f.StringSliceVarP(&profileNeedPattern, "need", "n", nil, "find specific packages in the profile")
+	}
 
-    add1Flags(getProfileCmd.Flags())
-    add2Flags(getProfileCmd.Flags())
+	add1Flags(getProfileCmd.Flags())
+	add2Flags(getProfileCmd.Flags())
 
-    add1Flags(clearProfileCmd.Flags())
+	add1Flags(clearProfileCmd.Flags())
 
-    profileCmd.AddCommand(getProfileCmd)
-    profileCmd.AddCommand(clearProfileCmd)
-    rootCmd.AddCommand(profileCmd)
+	profileCmd.AddCommand(getProfileCmd)
+	profileCmd.AddCommand(clearProfileCmd)
+	rootCmd.AddCommand(profileCmd)
 }
 
 var getProfileCmd = &cobra.Command{
-    Use: "get",
-    Run: getProfile,
+	Use: "get",
+	Run: getProfile,
 }
 
 func getProfile(cmd *cobra.Command, args []string) {
-    client.GetProfile(profileHost, profileIds, profileSkipPattern, profileExtra, profileOutput, profileNeedPattern)
+	client.GetProfile(profileHost, profileIds, profileSkipPattern, profileExtra, profileOutput, profileNeedPattern)
 }
 
 var clearProfileCmd = &cobra.Command{
-    Use: "clear",
-    Run: clearProfile,
+	Use: "clear",
+	Run: clearProfile,
 }
 
 func clearProfile(cmd *cobra.Command, args []string) {
-    client.ClearProfile(profileHost, profileIds, profileExtra)
+	client.ClearProfile(profileHost, profileIds, profileExtra)
 }
