@@ -31,6 +31,7 @@ type Build struct {
 	Debug bool
 	Host  string
 	Mode  string // cover mode
+	Extra string
 
 	GOPATH           string
 	GOBIN            string
