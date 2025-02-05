@@ -16,6 +16,7 @@ package cmd
 import (
 	"github.com/ar0c/goc/v2/pkg/build"
 	"github.com/spf13/cobra"
+	"runtime/coverage"
 )
 
 var buildCmd = &cobra.Command{
@@ -32,6 +33,7 @@ var (
 )
 
 func init() {
+	coverage.ClearCounters()
 	buildCmd.Flags().StringVarP(&gocmode, "gocmode", "", "count", "coverage mode: set, count, atomic, watch")
 	buildCmd.Flags().StringVarP(&gochost, "gochost", "", "127.0.0.1:7777", "specify the host of the goc sever")
 	buildCmd.Flags().StringVarP(&gocextra, "gocextra", "", "", "specify the extra information injected into the build")

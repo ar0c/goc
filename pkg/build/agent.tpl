@@ -51,9 +51,17 @@ var (
 )
 
 func init() {
+    isProd := os.Getenv("ET_ENV")
+    log.Printf("[goc][Info] echo app id: %v, env: %v", os.Getenv("ECHO_APP_ID"), isProd)
+    if isProd == "prod" {
+        log.Printf("[goc][Info] skip goc agent")
+        return
+    }
+
 	// init host
 	host_env := os.Getenv("GOC_CUSTOM_HOST")
 	if host_env != "" {
+	    log.Printf("[goc][Info] using host from env: %v", host_env)
 		host = host_env
 	}
 
@@ -90,6 +98,7 @@ func init() {
 					if isOffline(tmp) {
 						log.Printf("[goc][Error] needs re-register")
 						register(host)
+        				time.Sleep(waitDelay)
 						continue
 					}
 				} else {
