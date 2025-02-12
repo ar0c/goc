@@ -256,6 +256,10 @@ func (b *Build) injectGocAgent(where string, covers []*PackageCover) {
 	}
 }
 
+func (b *Build) injectApiToMain() {
+
+}
+
 // injectGlobalCoverVarFile 写入所有插桩变量的全局定义至一个单独的文件
 func (b *Build) injectGlobalCoverVarFile(decl string) {
 	globalCoverVarPackage := path.Base(b.GlobalCoverVarImportPath)
@@ -319,6 +323,7 @@ func fmtBranch(br []byte) (branch string) {
 	branch = strings.Replace(string(br), "\n", "", -1)
 	branch = strings.TrimLeft(branch, "heads/")
 	branch = strings.Trim(branch, " ")
+	branch = strings.Replace(branch, " ", "_", -1)
 	branch = strings.Replace(branch, "/", "-", -1)
 	return
 }
